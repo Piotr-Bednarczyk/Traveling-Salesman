@@ -15,9 +15,11 @@ public class GameManager : MonoBehaviour
     public static float TimesBetweenPaths=0.2f;
     public Text OperationCounter;
     [SerializeField] Text AlogrythmName;
-    [SerializeField] LineDrawer line;    
+    [SerializeField] LineDrawer line;
+    [SerializeField] LineDrawer line2;     
     LineDrawer tech;
     List <LineDrawer> Lines= new List<LineDrawer>();
+    private int linecounter=0; 
 
 
     public void ChangeTime(float speed){
@@ -91,7 +93,9 @@ public class GameManager : MonoBehaviour
         }
         for(int i=0;i<Certain.Visited.Count-1;i++)
         {
-            tech=Instantiate(line, Nodes[Certain.Visited[i]].transform.position, Quaternion.identity);
+            if(linecounter%2==0) tech=Instantiate(line, Nodes[Certain.Visited[i]].transform.position, Quaternion.identity);
+            else tech=Instantiate(line2, Nodes[Certain.Visited[i]].transform.position, Quaternion.identity);
+            linecounter++;
             tech.StartDrawing(Nodes[Certain.Visited[i+1]]);
             Lines.Add(tech);
             yield return new WaitForSeconds(TimesBetweenLines);
@@ -109,7 +113,9 @@ public class GameManager : MonoBehaviour
                 }
                 for(int i=0;i<Table[Table.Count-1][j].Visited.Count-1;i++)
                 {
-                    tech=Instantiate(line, Nodes[Table[Table.Count-1][j].Visited[i]].transform.position, Quaternion.identity);
+                    if(linecounter%2==0) tech=Instantiate(line, Nodes[Table[Table.Count-1][j].Visited[i]].transform.position, Quaternion.identity);
+                    else tech=Instantiate(line2, Nodes[Table[Table.Count-1][j].Visited[i]].transform.position, Quaternion.identity);
+                    linecounter++;
                     tech.StartDrawing(Nodes[Table[Table.Count-1][j].Visited[i+1]]);
                     Lines.Add(tech);
                     Counters.OperationCount++;
@@ -135,7 +141,9 @@ public class GameManager : MonoBehaviour
                 }
                 for(int i=0;i<Table[index][j].Visited.Count-1;i++)
                 {
-                    tech=Instantiate(line, Nodes[Table[index][j].Visited[i]].transform.position, Quaternion.identity);
+                    if(linecounter%2==0) tech=Instantiate(line, Nodes[Table[index][j].Visited[i]].transform.position, Quaternion.identity);
+                    else tech=Instantiate(line2, Nodes[Table[index][j].Visited[i]].transform.position, Quaternion.identity);
+                    linecounter++;
                     tech.StartDrawing(Nodes[Table[index][j].Visited[i+1]]);
                     Lines.Add(tech);
                     yield return new WaitForSeconds(TimesBetweenLines);
@@ -181,7 +189,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             
-            case GameState.GreedyAlgorythm: 
+            case GameState.GreedyAlgorythm:
+                 
                 AlogrythmName.text="Algorytm Zachłanny";
                 for(int i=Lines.Count-1;i>=0;i--)
                 {
@@ -228,8 +237,9 @@ public class GameManager : MonoBehaviour
                             }
 
                         }
-
-                        tech=Instantiate(line, CurrentNode.transform.position, Quaternion.identity);
+                        if(linecounter%2==0) tech=Instantiate(line, CurrentNode.transform.position, Quaternion.identity);
+                        else tech=Instantiate(line2, CurrentNode.transform.position, Quaternion.identity);
+                        linecounter++;
                         tech.StartDrawing(Nodes[CurrentLowestIndex]);
                         Lines.Add(tech);
                         Visited[CurrentLowestIndex]=true;
