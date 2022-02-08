@@ -16,10 +16,26 @@ public class GameManager : MonoBehaviour
     public Text OperationCounter;
     [SerializeField] Text AlogrythmName;
     [SerializeField] LineDrawer line;
-    [SerializeField] LineDrawer line2;     
+    [SerializeField] LineDrawer line2;   
     LineDrawer tech;
     List <LineDrawer> Lines= new List<LineDrawer>();
     private int linecounter=0; 
+
+
+    [SerializeField] GameObject Podsumowanie;  
+    [SerializeField] Text GreedyAlgorythm;
+    private int GreedyAlgorythmOperationCounter;
+    private float GreedyAlgorythmDistanceCounter;
+
+    [SerializeField] Text BruteAlgorythm;
+    private int BruteOperationCounter=0;
+    private float BruteDistanceCounter;
+
+    [SerializeField] Text KarpAlgorythm;
+    private int KarpOperationCounter=0;
+    private float KarpDistanceCounter;
+
+    [SerializeField] Text Optymalna;
 
 
     public void ChangeTime(float speed){
@@ -104,6 +120,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DrawLastTables(List <List <Path>> Table){
         Counters.OperationCount=0;
+        Counters.DistanceCount=Table[Table.Count-1][0].value;
+        BruteDistanceCounter=Counters.DistanceCount;
             for(int j=0;j<Table[Table.Count-1].Count;j++)
             {
                 for(int i=Lines.Count-1;i>=0;i--)
@@ -119,9 +137,14 @@ public class GameManager : MonoBehaviour
                     tech.StartDrawing(Nodes[Table[Table.Count-1][j].Visited[i+1]]);
                     Lines.Add(tech);
                     Counters.OperationCount++;
+                    BruteOperationCounter++;
                     yield return new WaitForSeconds(TimesBetweenLines);
                 }
-                if(Counters.DistanceCount>Table[Table.Count-1][j].value) Counters.DistanceCount=Table[Table.Count-1][j].value;
+                if(Counters.DistanceCount>=Table[Table.Count-1][j].value) {
+                    Counters.DistanceCount=Table[Table.Count-1][j].value;
+                    BruteDistanceCounter=Counters.DistanceCount;
+                }
+                
                 yield return new WaitForSeconds(TimesBetweenPaths);
             }
             StartCoroutine(Draw(Optimal));
@@ -129,6 +152,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DrawKarp(List <List <Path>> Table){
         Counters.OperationCount=0;
+        Counters.DistanceCount=Table[Table.Count-1][0].value;
+        KarpDistanceCounter=Counters.DistanceCount;
         int index=0;
         while(index<Table.Count)
         {
@@ -149,7 +174,11 @@ public class GameManager : MonoBehaviour
                     yield return new WaitForSeconds(TimesBetweenLines);
                 }
                 Counters.OperationCount++; 
-                if(index==Table.Count-1 && Counters.DistanceCount>Table[index][j].value) Counters.DistanceCount=Table[index][j].value;
+                KarpOperationCounter++;
+                if(index==Table.Count-1 && Counters.DistanceCount>=Table[index][j].value) {
+                    Counters.DistanceCount=Table[index][j].value;
+                    KarpDistanceCounter=Counters.DistanceCount;
+                }
                 yield return new WaitForSeconds(TimesBetweenPaths);
             }
             index++;
@@ -167,7 +196,7 @@ public class GameManager : MonoBehaviour
 
         switch(newState){
             case GameState.SelectNodes:
-                AlogrythmName.text="Wybierz wierzchołki Grafu(Max 10)";
+                AlogrythmName.text="Wybierz wierzchołki Grafu(Max 8)";
                 //do stuff
                 break;
             case GameState.DrawGraphs:
@@ -177,7 +206,7 @@ public class GameManager : MonoBehaviour
                 {
                     GridManager.Tiles[i].DestroyGameObject();
                 }
-                
+                GridManager.Tiles=new List<Tile>();
                 if(Nodes.Count>=2){
                     for(int i=0;i<Nodes.Count-1;i++)
                         for(int j=i+1;j<Nodes.Count;j++)
@@ -259,6 +288,9 @@ public class GameManager : MonoBehaviour
                 }
                 Counters.DistanceCount=optimaldistance;
                 Counters.OperationCount=numberofoperations;
+                GreedyAlgorythmDistanceCounter=optimaldistance;
+                GreedyAlgorythmOperationCounter=numberofoperations;
+
                 break;
 
             case GameState.BruteForce:
@@ -275,9 +307,14 @@ public class GameManager : MonoBehaviour
                 HeldKarpAlgorithm();
                 //StartCoroutine(Draw(Optimal));
                 break;
-
             case GameState.Finished:
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                StopAllCoroutines();
+                Podsumowanie.SetActive(true);
+                GreedyAlgorythm.text=$"Znaleziona odległość:{GreedyAlgorythmDistanceCounter}\nIlość operacji:{GreedyAlgorythmOperationCounter}\n\nRóżnica między znalezioną a optymalną trasą:\n{GreedyAlgorythmDistanceCounter-Optimal.value}\nWzględnie:{GreedyAlgorythmDistanceCounter/Optimal.value*100}% \n optymalnej trasy.";
+                BruteAlgorythm.text=$"Znaleziona odległość:{BruteDistanceCounter}\nIlość operacji:{BruteOperationCounter}\n\nMożliwe było przerwanie działania algorytmu co poskutkuje nieoptymalnym wynikiem.";
+                KarpAlgorythm.text=$"Znaleziona odległość:{KarpDistanceCounter}\nIlość operacji:{KarpOperationCounter}\n\nMożliwe było przerwanie działania algorytmu co poskutkuje nieoptymalnym wynikiem.";
+                Optymalna.text=$"Optymalna odległość:{Optimal.value}\n\nKliknij aby kontynuować";
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 break;
             // default:
             //     throw new ArgumentOutofRangeException(nameof(newState),newState,null);
@@ -285,8 +322,6 @@ public class GameManager : MonoBehaviour
 
         OnGameStageChanged?.Invoke(newState);
     }
-
-    
 
     //========================================================================================================
     //Brute Force
@@ -475,6 +510,7 @@ public class GameManager : MonoBehaviour
         else if(count==2) UpdateGameState(GameState.GreedyAlgorythm);
         else if(count==3) UpdateGameState(GameState.BruteForce);
         else if(count==4) UpdateGameState(GameState.HeldKarp);
+        else if(count==5) UpdateGameState(GameState.Finished);
         else
         Debug.Log("DONE");
     }

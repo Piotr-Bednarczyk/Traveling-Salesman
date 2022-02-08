@@ -41,6 +41,7 @@ public class GridManager : MonoBehaviour {
                 _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
+        GameManager.Nodes=new List<GameObject>();
  
         _cam.transform.position = new Vector3((float)_width/2 -0.5f, (float)_height / 2 - 0.5f,-11);
     }
