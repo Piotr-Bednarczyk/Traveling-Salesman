@@ -33,7 +33,7 @@ public class Tile : MonoBehaviour {
     
     void OnMouseDown(){
 
-        if(!WithNode)
+        if(!WithNode && GameManager.Nodes.Count<=10)
         {
         GameObject techNode = Instantiate(Node, new Vector3(transform.position.x, transform.position.y), Quaternion.identity);
         GameManager.Nodes.Add(techNode);

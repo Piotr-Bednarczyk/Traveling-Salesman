@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
  
 public class GridManager : MonoBehaviour {
 
@@ -43,6 +44,12 @@ public class GridManager : MonoBehaviour {
  
         _cam.transform.position = new Vector3((float)_width/2 -0.5f, (float)_height / 2 - 0.5f,-11);
     }
+
+    void Update() {
+          if (Input.GetKeyDown("escape"))
+                Application.Quit();
+    }
+
  
     public Tile GetTileAtPosition(Vector2 pos) {
         if (_tiles.TryGetValue(pos, out var tile)) return tile;

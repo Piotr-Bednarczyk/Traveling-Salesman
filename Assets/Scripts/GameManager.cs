@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 
         switch(newState){
             case GameState.SelectNodes:
-                AlogrythmName.text="Wybierz wierzchołki Grafu";
+                AlogrythmName.text="Wybierz wierzchołki Grafu(Max 10)";
                 //do stuff
                 break;
             case GameState.DrawGraphs:
