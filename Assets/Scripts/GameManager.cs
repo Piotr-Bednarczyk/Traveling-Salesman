@@ -328,12 +328,13 @@ public class GameManager : MonoBehaviour
     //========================================================================================================
     
     private void BruteForce( ){
-        
+
         List <List <Path>> Table=new List<List <Path>>();         
         for(int i=1;i<Nodes.Count;i++)
         {
             Table.Add(new List<Path>());
-            Table[0].Add( new Path(new List<int>(){0,i} , Vector3.Distance(Nodes[0].transform.position,Nodes[i].transform.position)));
+            Table[0].Add( new Path(new List<int>(){0,i} ,
+            Vector3.Distance(Nodes[0].transform.position,Nodes[i].transform.position)));
         }
 
         for(int i=0;i<Table.Count;i++)
@@ -351,14 +352,12 @@ public class GameManager : MonoBehaviour
                             }
                         }
                     if(notpresent){
-                    // Debug.Log($"notpresent: {notpresent}");
-                    // Debug.Log($"i: {i}");
-                    // Debug.Log($"j: {j}");
                     List <int> tech2=new List<int>(Table[i][j].Visited);
                     tech2.Add(nodenumber); 
-                    float tech3=Table[i][j].value+Vector3.Distance(Nodes[Table[i][j].Last()].transform.position, Nodes[nodenumber].transform.position);
+                    float tech3= Table[i][j].value + Vector3.Distance( 
+                        Nodes[Table[i][j].Last()].transform.position, 
+                        Nodes[nodenumber].transform.position);
                     Table[i+1].Add(new Path( tech2 ,  tech3));
-                    //Table[i+1][Table[i+1].Count-1].Print();
                     }
                 }
             }
@@ -370,7 +369,9 @@ public class GameManager : MonoBehaviour
 
             List <int> tech2=new List<int>(Table[lastcolumn-1][i].Visited);
             tech2.Add(0); 
-            float tech3=Table[lastcolumn-1][i].value+Vector3.Distance(Nodes[Table[lastcolumn-1][i].Last()].transform.position, Nodes[0].transform.position);
+            float tech3=Table[lastcolumn-1][i].value+Vector3.Distance(
+                Nodes[Table[lastcolumn-1][i].Last()].transform.position,
+                 Nodes[0].transform.position);
             Table[lastcolumn].Add(new Path( tech2 ,  tech3));
 
         }
@@ -380,6 +381,7 @@ public class GameManager : MonoBehaviour
         if(Optimal.value>Table[Table.Count-1][i].value)
             Optimal=Table[Table.Count-1][i];
         }
+
         //Optimal.Print();
         
         StartCoroutine(DrawLastTables(Table));
@@ -427,33 +429,26 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-
-            
+   
             for(int j=0;j<Table[i+1].Count-1;j++)
             {
-                
-                
                 for(int k=j+1;k<Table[i+1].Count;k++)
                 {
                     if(Table[i+1][j].Compare(Table[i+1][k]))
                     {
                         if(Table[i+1][k].value>=Table[i+1][j].value)
                         {
-                            
                             Table[i+1].RemoveAt(k);
                             k--; 
                         }
                         else
                         {
-                           
                             Table[i+1].RemoveAt(j);
                             j--;
                             break;
                         }
-                    }
-                    
+                    }                    
                 }
-
             }
                        
         }
@@ -478,25 +473,6 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(DrawKarp(Table));
-        //StartCoroutine(DrawLastTables(Table));
-
-        // //==Wypisywanie===
-        // for(int i=0;i<Table.Count;i++)
-        // {
-        //     Debug.Log($"{i} ===================");
-        //     for(int j=0;j<Table[i].Count;j++)
-        //     {
-        //         string log="Path:";
-        //         for (int k=0;k<Table[i][j].Visited.Count;k++)
-        //         {
-        //             log+=Table[i][j].Visited[k];
-        //             log+=",";
-        //         }
-        //         log+=$": {Table[i][j].value}";
-        //         Debug.Log(log);
-        //     }
-        // }
-        // //===============
 
     }
 
