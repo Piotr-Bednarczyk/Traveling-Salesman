@@ -313,7 +313,7 @@ public class GameManager : MonoBehaviour
                 GreedyAlgorythm.text=$"Znaleziona odległość:{GreedyAlgorythmDistanceCounter}\nIlość operacji:{GreedyAlgorythmOperationCounter}\n\nRóżnica między znalezioną a optymalną trasą:\n{GreedyAlgorythmDistanceCounter-Optimal.value}\nWzględnie:{GreedyAlgorythmDistanceCounter/Optimal.value*100}% \n optymalnej trasy.";
                 BruteAlgorythm.text=$"Znaleziona odległość:{BruteDistanceCounter}\nIlość operacji:{BruteOperationCounter}\n\nMożliwe było przerwanie działania algorytmu co poskutkuje nieoptymalnym wynikiem.";
                 KarpAlgorythm.text=$"Znaleziona odległość:{KarpDistanceCounter}\nIlość operacji:{KarpOperationCounter}\n\nMożliwe było przerwanie działania algorytmu co poskutkuje nieoptymalnym wynikiem.";
-                Optymalna.text=$"Optymalna odległość:{Optimal.value}\n\nKliknij aby kontynuować";
+                Optymalna.text=$"Optymalna odległość:{Optimal.value}\n\nKliknij ENTER aby kontynuować";
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 break;
             // default:
