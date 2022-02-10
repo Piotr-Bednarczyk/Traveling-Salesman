@@ -1201,6 +1201,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4970552569539716492, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970552569539716492, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime0
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970552569539716492, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970552569539716492, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.20754719
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970552569539716492, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.01556021
+      objectReference: {fileID: 0}
     - target: {fileID: 7327376477422581701, guid: 0a17ed8a8ac41b94785fb1369ac79e1d, type: 3}
       propertyPath: m_Name
       value: LineDrawer 2
@@ -1447,8 +1467,24 @@ PrefabInstance:
       value: LineDrawer
       objectReference: {fileID: 0}
     - target: {fileID: 7199640073770620674, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7199640073770620674, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime0
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 7199640073770620674, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7199640073770620674, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7199640073770620674, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4d0277279f9fb54ca12d9d2b1d7d929, type: 3}
